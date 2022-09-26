@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+  service-grpc-gw:
+    restart: on-failure
+    depends_on:
+      - service-grpc-parser
+    build: 'service-grpc-parser/'
+    networks:
+      - quizNetwork
+
+  service-grpc-parser:
+    restart: on-failure
+    build: 'service-grpc-gw/'
+    networks:
+      - quizNetwork
+
+networks:
+  quizNetwork:
+    driver: bridge

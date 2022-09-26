@@ -1,0 +1,97 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "rusprofile_parser.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/inncompany/{INN}": {
+      "get": {
+        "operationId": "ClubsInfo_getCompany",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/rusprofile_parserCompanyInfo"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "INN",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ClubsInfo"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "rusprofile_parserCompanyInfo": {
+      "type": "object",
+      "properties": {
+        "INN": {
+          "type": "string"
+        },
+        "KPP": {
+          "type": "string"
+        },
+        "CompanyName": {
+          "type": "string"
+        },
+        "FullNameManager": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
