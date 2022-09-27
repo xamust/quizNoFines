@@ -1,6 +1,6 @@
 FROM golang:latest
 MAINTAINER Stepan K. <xamust@gmail.com>
-WORKDIR /service_get/
+WORKDIR /service-grpc-parser/
 VOLUME ["/opt/service-grpc-parser"]
 COPY . ./
 RUN make build
