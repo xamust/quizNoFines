@@ -32,12 +32,6 @@ func (s *Service) configureLogger() error {
 	return nil
 }
 
-// config parse service...
-func (s *Service) configureParse() error {
-	s.parse = parser.CollectorInit()
-	return nil
-}
-
 func (s *Service) Start() error {
 
 	//configure logger...
@@ -45,11 +39,6 @@ func (s *Service) Start() error {
 		return err
 	}
 
-	//configure collecting...
-	if err := s.configureParse(); err != nil {
-		s.logger.Error(err)
-		return err
-	}
 	//gRPC server...
 	listengRPS, err := net.Listen("tcp", s.config.PortgRPC)
 	if err != nil {
@@ -58,7 +47,7 @@ func (s *Service) Start() error {
 	}
 
 	serviceCollect := grpc.NewServer()
-	sgRPC.RegisterClubsInfoServer(serviceCollect, &server{Service: s})
+	sgRPC.RegisterClubsInfoServer(serviceCollect, &server{logger: s.logger, parser: s.parse})
 	s.logger.Infof("Starting gRPC listener on port: %v ...", s.config.PortgRPC)
 	if err = serviceCollect.Serve(listengRPS); err != nil {
 		s.logger.Error("failed to serve: %v", err)
