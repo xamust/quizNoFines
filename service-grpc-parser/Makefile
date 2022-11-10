@@ -1,5 +1,6 @@
 init:
 		go mod tidy
+		make compile-grpc
 .PHONY: init
 build:
 		make init
@@ -21,6 +22,12 @@ test:
 .PHONY: test
 ## Compile the proto file.
 compile-grpc:
-		protoc -I api/proto -I. -I${GOPATH}/pkg -I${GOPATH}/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@v1.16.0/third_party/googleapis --go_out=. --go-grpc_opt=require_unimplemented_servers=false --go-grpc_out=. api/proto/*.proto
+		protoc -I api/proto \
+		-I./third_party/grpc-gateway \
+        -I./third_party/googleapis \
+		--go_out=. \
+		--go-grpc_opt=require_unimplemented_servers=false \
+		--go-grpc_out=. \
+		api/proto/*.proto
 .PHONY: compile-grpc
 .DEFAULT_GOAL := run

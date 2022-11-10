@@ -11,8 +11,8 @@
     "application/json"
   ],
   "paths": {
-    "/v1/inncompany/{INN}": {
-      "get": {
+    "/v1/inncompany": {
+      "post": {
         "operationId": "ClubsInfo_getCompany",
         "responses": {
           "200": {
@@ -30,10 +30,12 @@
         },
         "parameters": [
           {
-            "name": "INN",
-            "in": "path",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/rusprofile_parserINNCompany"
+            }
           }
         ],
         "tags": [
@@ -89,6 +91,14 @@
           "type": "string"
         },
         "FullNameManager": {
+          "type": "string"
+        }
+      }
+    },
+    "rusprofile_parserINNCompany": {
+      "type": "object",
+      "properties": {
+        "INN": {
           "type": "string"
         }
       }
